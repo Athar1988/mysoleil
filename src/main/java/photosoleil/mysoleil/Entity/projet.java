@@ -3,6 +3,7 @@ package photosoleil.mysoleil.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -16,4 +17,6 @@ public class projet {
     private String type;
     private String titre;
     private String description;
+    @OneToOne(mappedBy = "projet")
+    private ImageModel image;
 }
