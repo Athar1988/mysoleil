@@ -18,6 +18,4 @@ public interface repprojet extends JpaRepository<projet,Long> {
     @RestResource(path="/selectedProjetType")
     public List<projet> findByTypeContains(@Param("type") String type);
 
-   // @RestResource(path="/selectedProjetTitre")
-   // public projet findByTyitreContains(@Param("titre") String titre);
 }

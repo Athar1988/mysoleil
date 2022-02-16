@@ -1,4 +1,3 @@
-
 package photosoleil.mysoleil.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,23 +8,32 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import photosoleil.mysoleil.DAO.*;
 import photosoleil.mysoleil.Entity.*;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Optional;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 
 @RestController
 @CrossOrigin("*")
-//@RequestMapping(path = "image")
 public class ImageUploadController {
 
     @Autowired
     private repprojet projetrep ;
-    private ImageRepository imagerep;
 
+
+    @PostMapping("/upload/{id}")
+    public BodyBuilder uplaodImage(@PathVariable("id") Long idProduit, @RequestParam("imageFile") MultipartFile file) throws IOException {
+        projet P=projetrep.findById(idProduit).get();
+        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        P.setNameImage(file.getOriginalFilename());
+        P.setTypeImage(file.getContentType());
+        P.setPicByte(file.getBytes());
+        //ImageModel img = new ImageModel(idProduit ,file.getOriginalFilename(), file.getContentType(),
+        //compressBytes(file.getBytes()), P);
+        //imageRepository.save(img);
+        // P.setPhoto(img);
+        projetrep.save(P);
+        return ResponseEntity.status(HttpStatus.OK);
+    }
+
+    /*
     @PostMapping("/imageModels/{id}")
     public BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable Long id) throws IOException {
         projet p=projetrep.findById(id).get();
@@ -37,19 +45,19 @@ public class ImageUploadController {
         System.out.println(imagerep.findByName(id+".jpg")+"**************** 4 " );
         System.out.println("**************** 3 " + img.getProjet().getTitre());
         return ResponseEntity.status(HttpStatus.OK);
-    }
+    }*/
 
 
-    @GetMapping(path = { "/get/{imageName}" })
+  /*  @GetMapping(path = { "/get/{imageName}" })
     public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
         final Optional<ImageModel> retrievedImage = imagerep.findByName(imageName);
         ImageModel img = new ImageModel(retrievedImage.get().getId(),retrievedImage.get().getName(), retrievedImage.get().getType(),
                 decompressBytes(retrievedImage.get().getPicByte()),retrievedImage.get().getProjet());
         return img;
-    }
+    }*/
 
-        // compress the image bytes before storing it in the database
-    public static byte[] compressBytes(byte[] data) {
+    // compress the image bytes before storing it in the database
+  /*  public static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setInput(data);
         deflater.finish();
@@ -67,7 +75,7 @@ public class ImageUploadController {
         return outputStream.toByteArray();
     }
 
-        // uncompress the image bytes before returning it to the angular application
+    // uncompress the image bytes before returning it to the angular application
     public static byte[] decompressBytes(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);
@@ -83,5 +91,5 @@ public class ImageUploadController {
         } catch (DataFormatException e) {
         }
         return outputStream.toByteArray();
-    }
+    }*/
 }
