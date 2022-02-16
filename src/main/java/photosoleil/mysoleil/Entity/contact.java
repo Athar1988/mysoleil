@@ -20,5 +20,6 @@ public class contact {
     private String nom;
     private String email;
     private String objet;
+    @Column(length=10485760)
     private String message;
 }

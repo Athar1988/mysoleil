@@ -19,16 +19,12 @@ public class ImageUploadController {
 
 
     @PostMapping("/upload/{id}")
-    public BodyBuilder uplaodImage(@PathVariable("id") Long idProduit, @RequestParam("imageFile") MultipartFile file) throws IOException {
-        projet P=projetrep.findById(idProduit).get();
+    public BodyBuilder uplaodImage(@PathVariable("id") Long idProjet, @RequestParam("imageFile") MultipartFile file) throws IOException {
+        projet P=projetrep.findById(idProjet).get();
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
         P.setNameImage(file.getOriginalFilename());
         P.setTypeImage(file.getContentType());
         P.setPicByte(file.getBytes());
-        //ImageModel img = new ImageModel(idProduit ,file.getOriginalFilename(), file.getContentType(),
-        //compressBytes(file.getBytes()), P);
-        //imageRepository.save(img);
-        // P.setPhoto(img);
         projetrep.save(P);
         return ResponseEntity.status(HttpStatus.OK);
     }
@@ -45,8 +41,8 @@ public class ImageUploadController {
         System.out.println(imagerep.findByName(id+".jpg")+"**************** 4 " );
         System.out.println("**************** 3 " + img.getProjet().getTitre());
         return ResponseEntity.status(HttpStatus.OK);
-    }*/
-
+    }
+*/
 
   /*  @GetMapping(path = { "/get/{imageName}" })
     public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {

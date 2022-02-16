@@ -15,6 +15,7 @@ public class projet {
     private Long id;
     private String type;
     private String titre;
+    @Column(length=10485760)
     private String description;
     private String nameImage;
     private String typeImage;
