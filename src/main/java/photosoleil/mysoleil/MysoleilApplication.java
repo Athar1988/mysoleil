@@ -29,6 +29,6 @@ public class MysoleilApplication implements CommandLineRunner {
                 contact.class,
                 admin.class);
 
-        adminRep.save(new admin(null,"solar","solar"));
+       // adminRep.save(new admin(null,"solar","solar"));
     }
 }

@@ -29,6 +29,13 @@ public class ImageUploadController {
         return ResponseEntity.status(HttpStatus.OK);
     }
 
+
+
+    @PostMapping("/projets/misejour/{id}")
+    public projet modifierProjet(@PathVariable("id") Long idProjet, @RequestBody projet p) throws IOException {
+            p.setId(idProjet);
+            return   projetrep.save(p);
+    }
     /*
     @PostMapping("/imageModels/{id}")
     public BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file, @PathVariable Long id) throws IOException {
